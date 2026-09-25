@@ -8,14 +8,17 @@ export const registerUser = async (req, res) => {
   try {
     const { name, email, password, studentId, department, year, role } = req.body;
 
-    if (!name || !email || !password) {
+    const cleanName = name ? name.trim() : '';
+    const cleanEmail = email ? email.toLowerCase().trim() : '';
+
+    if (!cleanName || !cleanEmail || !password) {
       return res.status(400).json({
         success: false,
         message: 'Please provide full name, email, and password.',
       });
     }
 
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ email: cleanEmail });
     if (userExists) {
       return res.status(400).json({
         success: false,
@@ -24,10 +27,10 @@ export const registerUser = async (req, res) => {
     }
 
     const user = await User.create({
-      name,
-      email,
+      name: cleanName,
+      email: cleanEmail,
       password,
-      studentId: studentId || '',
+      studentId: studentId ? studentId.trim() : '',
       department: department || 'CSE',
       year: year || '3rd Year',
       role: role && ['student', 'faculty', 'club_admin'].includes(role) ? role : 'student',
@@ -45,6 +48,9 @@ export const registerUser = async (req, res) => {
           department: user.department,
           year: user.year,
           avatar: user.avatar,
+          bio: user.bio,
+          skills: user.skills,
+          interests: user.interests,
           token: generateToken(user._id),
         },
       });
@@ -67,16 +73,15 @@ export const registerUser = async (req, res) => {
 // @access  Public
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
+    const cleanEmail = email ? email.toLowerCase().trim() : '';
+    if (!cleanEmail || !password) {
       return res.status(400).json({
         success: false,
         message: 'Please provide both email and password.',
       });
     }
 
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email: cleanEmail }).select('+password');
 
     if (user && (await user.matchPassword(password))) {
       res.json({

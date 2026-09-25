@@ -11,26 +11,31 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem('campusos_token') || null);
   const [loading, setLoading] = useState(true);
 
-  // Sync token in localStorage & verify session
+  // Verify session once on mount without prematurely logging out on network latency
   useEffect(() => {
     const verifyUser = async () => {
-      if (token) {
+      const storedToken = localStorage.getItem('campusos_token');
+      if (storedToken) {
         try {
           const res = await api.get('/auth/me');
-          if (res.success && res.data) {
+          if (res && res.success && res.data) {
             setUser(res.data);
             localStorage.setItem('campusos_user', JSON.stringify(res.data));
           }
         } catch (err) {
-          console.warn('[AuthContext] Session expired or invalid, logging out.');
-          logout();
+          if (err.message && err.message.includes('401')) {
+            console.warn('[AuthContext] Session expired or invalid, logging out.');
+            logout();
+          } else {
+            console.warn('[AuthContext] Network or cold start notice; retaining local offline user session.', err.message);
+          }
         }
       }
       setLoading(false);
     };
 
     verifyUser();
-  }, [token]);
+  }, []);
 
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });

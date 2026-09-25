@@ -51,16 +51,15 @@ const seedData = async () => {
     ]);
     console.log('[Seed] Cleared existing records.');
 
-    // Salt and hash passwords
-    const salt = await bcrypt.genSalt(10);
-    const demoPasswordHash = await bcrypt.hash('CampusOS@2026', salt);
+    // Baseline demo password (User model pre('save') hook handles proper bcrypt hashing)
+    const demoPassword = 'CampusOS@2026';
 
     // 1. Create Users
     const users = await User.create([
       {
         name: 'Arjun Sharma',
         email: 'student@campusos.demo',
-        password: demoPasswordHash,
+        password: demoPassword,
         role: 'student',
         studentId: '22BCSE1042',
         department: 'CSE',
@@ -73,7 +72,7 @@ const seedData = async () => {
       {
         name: 'Dr. Rajeshwari Raman',
         email: 'admin@campusos.demo',
-        password: demoPasswordHash,
+        password: demoPassword,
         role: 'super_admin',
         studentId: 'FAC-DIR-001',
         department: 'General Administration',
@@ -86,7 +85,7 @@ const seedData = async () => {
       {
         name: 'Prof. Vikram Sen',
         email: 'faculty@campusos.demo',
-        password: demoPasswordHash,
+        password: demoPassword,
         role: 'faculty',
         studentId: 'FAC-CSE-018',
         department: 'CSE',
@@ -99,7 +98,7 @@ const seedData = async () => {
       {
         name: 'Ananya Verma',
         email: 'club@campusos.demo',
-        password: demoPasswordHash,
+        password: demoPassword,
         role: 'club_admin',
         studentId: '22BCSE1108',
         department: 'CSE',
