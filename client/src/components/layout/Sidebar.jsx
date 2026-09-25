@@ -54,24 +54,20 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
   return (
     <aside
-      className={`relative hidden md:flex flex-col shrink-0 transition-all duration-300 z-30 border-r border-white/10 glass-panel h-screen sticky top-0 ${
+      className={`relative hidden md:flex flex-col shrink-0 transition-all duration-300 z-30 border-r border-white/15 glass-panel h-screen sticky top-0 ${
         collapsed ? 'w-20' : 'w-64'
       }`}
     >
       {/* Brand Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/10 h-16">
-        <div className={`flex items-center gap-3 overflow-hidden ${collapsed ? 'justify-center w-full' : ''}`}>
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-indigo-600 p-[1.5px] shrink-0">
-            <div className="w-full h-full bg-[#050713] rounded-[7px] flex items-center justify-center">
-              <img src="/logo.svg" alt="CampusOS" className="w-5 h-5" />
-            </div>
-          </div>
+        <div className={`flex items-center gap-2.5 overflow-hidden ${collapsed ? 'justify-center w-full' : ''}`}>
+          <img src="/logo.svg" alt="CAMPII" className="w-8 h-8 object-contain shrink-0" />
           {!collapsed && (
             <div className="flex flex-col">
               <span className="font-extrabold text-sm tracking-tight text-white">
-                Campus<span className="text-cyan-400">OS</span>
+                CAMPII
               </span>
-              <span className="text-[9px] text-slate-400 font-mono tracking-wider">ENTERPRISE v2.0</span>
+              <span className="text-[9px] text-orange-400 font-mono tracking-wider font-bold">ECOSYSTEM v3.0</span>
             </div>
           )}
         </div>
@@ -80,7 +76,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         {!collapsed && (
           <button
             onClick={() => setCollapsed(true)}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
             title="Collapse sidebar"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -91,7 +87,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       {collapsed && (
         <button
           onClick={() => setCollapsed(false)}
-          className="mx-auto my-2 p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+          className="mx-auto my-2 p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
           title="Expand sidebar"
         >
           <ChevronRight className="w-4 h-4" />
@@ -107,11 +103,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               key={item.path}
               to={item.path}
               className={({ isActive }) => `
-                flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all group relative
+                flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all group relative
                 ${
                   isActive
-                    ? 'bg-gradient-to-r from-cyan-500/20 via-indigo-500/15 to-transparent text-cyan-300 border border-cyan-500/30 shadow-lg shadow-cyan-500/10'
-                    : 'text-slate-400 hover:text-slate-100 hover:bg-white/5 border border-transparent'
+                    ? 'bg-gradient-to-r from-orange-500/25 via-amber-500/15 to-transparent text-orange-200 border border-orange-500/40 shadow-lg shadow-orange-500/15 font-bold'
+                    : 'text-slate-200 hover:text-white hover:bg-white/10 border border-transparent'
                 }
                 ${collapsed ? 'justify-center px-0' : ''}
               `}
@@ -121,7 +117,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 <>
                   <Icon
                     className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
-                      isActive ? 'text-cyan-400 glow-cyan' : 'text-slate-400 group-hover:text-slate-200'
+                      isActive ? 'text-orange-400' : 'text-slate-300 group-hover:text-white'
                     }`}
                   />
                   {!collapsed && <span className="truncate">{item.label}</span>}
@@ -129,15 +125,15 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                     <span
                       className={`ml-auto text-[8px] font-mono px-1.5 py-0.5 rounded font-bold ${
                         item.badge === 'FLASH' || item.badge === 'SOS'
-                          ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 animate-pulse'
-                          : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                          ? 'bg-rose-500/25 text-rose-200 border border-rose-500/40 animate-pulse'
+                          : 'bg-orange-500/25 text-orange-200 border border-orange-400/40'
                       }`}
                     >
                       {item.badge}
                     </span>
                   )}
                   {isActive && (
-                    <div className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-cyan-400 rounded-r-full" />
+                    <div className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-orange-500 rounded-r-full shadow-[0_0_8px_#f97316]" />
                   )}
                 </>
               )}
@@ -147,17 +143,17 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       </div>
 
       {/* User Status Footer */}
-      <div className="p-3 border-t border-white/10 mt-auto bg-black/30">
+      <div className="p-3 border-t border-white/10 mt-auto bg-black/40">
         <div className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''}`}>
           <img
             src={user?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150'}
             alt={user?.name}
-            className="w-8 h-8 rounded-full object-cover ring-1 ring-cyan-400/40 shrink-0"
+            className="w-8 h-8 rounded-full object-cover ring-1 ring-orange-400/60 shrink-0"
           />
           {!collapsed && (
             <div className="overflow-hidden">
-              <p className="text-xs font-semibold text-white truncate">{user?.name}</p>
-              <p className="text-[9px] text-slate-400 font-mono truncate uppercase">{user?.role} • {user?.department}</p>
+              <p className="text-xs font-bold text-white truncate">{user?.name}</p>
+              <p className="text-[9px] text-orange-300 font-mono truncate uppercase font-semibold">{user?.role} • {user?.department}</p>
             </div>
           )}
         </div>

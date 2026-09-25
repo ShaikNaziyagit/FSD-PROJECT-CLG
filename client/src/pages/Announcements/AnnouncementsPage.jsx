@@ -136,8 +136,8 @@ const AnnouncementsPage = () => {
                     ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-sm'
                     : p === 'Important'
                     ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm'
-                    : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
-                  : 'text-slate-400 hover:text-white bg-slate-900/50 hover:bg-white/5 border border-white/5'
+                    : 'bg-orange-500/20 text-orange-300 border border-orange-500/40 shadow-sm'
+                  : 'text-stone-400 hover:text-white bg-stone-900/50 hover:bg-white/5 border border-white/5'
               }`}
             >
               {p}
@@ -189,21 +189,21 @@ const AnnouncementsPage = () => {
                         ? 'rose'
                         : ann.priority === 'Important'
                         ? 'amber'
-                        : 'cyan'
+                        : 'orange'
                     }
                     size="sm"
                   >
                     {ann.priority} Notice
                   </Badge>
-                  <span className="text-xs font-mono text-cyan-300 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
+                  <span className="text-xs font-mono text-orange-300 bg-orange-500/10 px-2.5 py-0.5 rounded-full border border-orange-500/20">
                     {ann.category}
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">
+                  <span className="text-xs text-stone-400 font-mono">
                     Audience: {ann.targetAudience}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3 text-xs text-slate-500 shrink-0">
+                <div className="flex items-center gap-3 text-xs text-stone-500 shrink-0">
                   <span className="flex items-center gap-1 font-mono">
                     <Clock className="w-3.5 h-3.5" />
                     {new Date(ann.createdAt).toLocaleDateString(undefined, {
@@ -229,13 +229,13 @@ const AnnouncementsPage = () => {
                 {ann.title}
               </h3>
 
-              <p className="text-sm text-slate-300 leading-relaxed mb-4 whitespace-pre-line">
+              <p className="text-sm text-stone-300 leading-relaxed mb-4 whitespace-pre-line">
                 {ann.description}
               </p>
 
-              <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+              <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-stone-400">
                 <span className="flex items-center gap-1.5 font-medium">
-                  <User className="w-3.5 h-3.5 text-indigo-400" />
+                  <User className="w-3.5 h-3.5 text-orange-400" />
                   Issued by: {ann.author?.name || 'Academic Dean'} ({ann.department})
                 </span>
                 <span className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">

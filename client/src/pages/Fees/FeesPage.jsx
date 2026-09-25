@@ -121,20 +121,20 @@ const FeesPage = () => {
             </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               Fee Payments &{' '}
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 bg-clip-text text-transparent">
                 Digital Receipts
               </span>
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
+            <p className="text-xs sm:text-sm text-stone-300 max-w-2xl">
               Pay semester tuition, examination fees, hostel charges, and campus bus pass with instant payment verification, 0% gateway surcharge, and official digital receipts.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <div className="p-3 bg-black/40 rounded-2xl border border-white/10 text-right">
-              <span className="text-[10px] text-slate-400 block font-mono">STUDENT ENROLLMENT</span>
+              <span className="text-[10px] text-stone-400 block font-mono">STUDENT ENROLLMENT</span>
               <span className="text-sm font-bold text-white">{summary.rollNumber}</span>
-              <span className="text-[10px] text-cyan-300 block">{summary.studentName}</span>
+              <span className="text-[10px] text-orange-300 block">{summary.studentName}</span>
             </div>
           </div>
         </div>
@@ -164,7 +164,7 @@ const FeesPage = () => {
           value="15th Next Month"
           change="Extended without late fee"
           changeType="neutral"
-          color="blue"
+          color="amber"
         />
         <StatCard
           icon={ShieldCheck}
@@ -172,14 +172,14 @@ const FeesPage = () => {
           value={summary.totalDue === 0 ? 'Exemplary' : 'Active Balance'}
           change="Eligible for Hall Ticket"
           changeType="positive"
-          color="cyan"
+          color="orange"
         />
       </div>
 
       {/* Fee Items Table / Cards */}
       <div className="space-y-4">
         <h2 className="text-lg font-bold text-white flex items-center gap-2">
-          <Receipt className="w-5 h-5 text-cyan-400" />
+          <Receipt className="w-5 h-5 text-orange-400" />
           <span>Semester Fee Invoices & Payment Schedule</span>
         </h2>
 
@@ -296,39 +296,39 @@ const FeesPage = () => {
       {/* Simulated Payment Gateway Modal */}
       {payingFee && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in">
-          <div className="max-w-md w-full glass-panel p-6 rounded-3xl border border-cyan-500/40 space-y-5 shadow-2xl relative">
+          <div className="max-w-md w-full glass-panel p-6 rounded-3xl border border-orange-500/40 space-y-5 shadow-2xl relative">
             <button
               onClick={() => setPayingFee(null)}
-              className="absolute top-5 right-5 p-1 text-slate-400 hover:text-white"
+              className="absolute top-5 right-5 p-1 text-stone-400 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Gateway Header */}
             <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-black text-black">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 flex items-center justify-center font-black text-stone-950">
                 ₹
               </div>
               <div>
                 <h3 className="font-bold text-white text-base">CampusPay Gateway</h3>
-                <p className="text-[11px] text-slate-400">Encrypted 256-Bit SSL Secured Fee Checkout</p>
+                <p className="text-[11px] text-stone-400">Encrypted 256-Bit SSL Secured Fee Checkout</p>
               </div>
             </div>
 
             {/* Invoiced Amount */}
             <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between">
               <div>
-                <span className="text-[10px] text-slate-400 block">TOTAL PAYABLE AMOUNT</span>
-                <span className="text-xs font-semibold text-slate-200">{payingFee.feeType}</span>
+                <span className="text-[10px] text-stone-400 block">TOTAL PAYABLE AMOUNT</span>
+                <span className="text-xs font-semibold text-stone-200">{payingFee.feeType}</span>
               </div>
-              <span className="text-2xl font-mono font-extrabold text-cyan-300">
+              <span className="text-2xl font-mono font-extrabold text-orange-300">
                 ₹{payingFee.amount.toLocaleString()}
               </span>
             </div>
 
             {/* Payment Method Selector */}
             <div className="space-y-2">
-              <span className="text-xs font-semibold text-slate-300">Select Payment Instrument:</span>
+              <span className="text-xs font-semibold text-stone-300">Select Payment Instrument:</span>
               <div className="grid grid-cols-3 gap-2">
                 {[
                   { id: 'UPI', label: 'UPI / QR', icon: QrCode },
@@ -340,8 +340,8 @@ const FeesPage = () => {
                     onClick={() => setPaymentMethod(item.id)}
                     className={`p-3 rounded-xl border text-xs font-semibold flex flex-col items-center gap-1.5 transition-all ${
                       paymentMethod === item.id
-                        ? 'bg-cyan-500/20 border-cyan-500/60 text-cyan-300 shadow-lg shadow-cyan-500/10'
-                        : 'bg-white/5 border-white/10 text-slate-400 hover:text-white'
+                        ? 'bg-orange-500/20 border-orange-500/60 text-orange-300 shadow-lg shadow-orange-500/10'
+                        : 'bg-white/5 border-white/10 text-stone-400 hover:text-white'
                     }`}
                   >
                     <item.icon className="w-4 h-4" />
@@ -355,9 +355,9 @@ const FeesPage = () => {
             {paymentMethod === 'UPI' && (
               <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-center space-y-2">
                 <div className="w-24 h-24 bg-white p-2 rounded-xl mx-auto flex items-center justify-center">
-                  <QrCode className="w-20 h-20 text-slate-900" />
+                  <QrCode className="w-20 h-20 text-stone-900" />
                 </div>
-                <p className="text-[11px] text-slate-400 font-mono">Scan via GPay, PhonePe, or Paytm UPI</p>
+                <p className="text-[11px] text-stone-400 font-mono">Scan via GPay, PhonePe, or Paytm UPI</p>
               </div>
             )}
 
@@ -366,7 +366,7 @@ const FeesPage = () => {
               <button
                 onClick={handleSimulatePayment}
                 disabled={processingPayment}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-black font-extrabold text-sm shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-orange-500 via-amber-500 to-orange-400 hover:from-orange-400 hover:to-amber-400 text-stone-950 font-extrabold text-sm shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
               >
                 {processingPayment ? (
                   <span>Authorizing with Banking Core...</span>
@@ -385,10 +385,10 @@ const FeesPage = () => {
       {/* Digital Receipt Modal (Printable) */}
       {receiptModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in overflow-y-auto">
-          <div className="max-w-xl w-full bg-[#0a0f24] p-6 sm:p-8 rounded-3xl border border-white/20 space-y-6 shadow-2xl relative my-8">
+          <div className="max-w-xl w-full bg-stone-950 p-6 sm:p-8 rounded-3xl border border-white/20 space-y-6 shadow-2xl relative my-8">
             <button
               onClick={() => setReceiptModal(null)}
-              className="absolute top-5 right-5 p-1.5 rounded-full bg-white/10 text-slate-300 hover:text-white"
+              className="absolute top-5 right-5 p-1.5 rounded-full bg-white/10 text-stone-300 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
@@ -399,9 +399,9 @@ const FeesPage = () => {
                 <CheckCircle2 className="w-6 h-6 text-emerald-400" />
               </div>
               <h2 className="text-base font-black text-white uppercase tracking-wide">
-                CAMPUS OPERATING SYSTEM (CAMPUSOS)
+                CAMPII CONNECTED UNIVERSITY
               </h2>
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest font-mono">
+              <p className="text-[10px] text-stone-400 uppercase tracking-widest font-mono">
                 OFFICIAL UNIVERSITY ELECTRONIC FEE RECEIPT
               </p>
               <span className="inline-block mt-1 px-3 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono font-bold border border-emerald-500/30">
@@ -412,12 +412,12 @@ const FeesPage = () => {
             {/* Receipt Meta Details */}
             <div className="grid grid-cols-2 gap-3 text-xs bg-black/40 p-4 rounded-2xl border border-white/10">
               <div>
-                <span className="text-slate-400 block text-[10px]">Receipt Number:</span>
+                <span className="text-stone-400 block text-[10px]">Receipt Number:</span>
                 <span className="font-mono font-bold text-white">{receiptModal.receiptNumber}</span>
               </div>
               <div>
-                <span className="text-slate-400 block text-[10px]">Transaction ID:</span>
-                <span className="font-mono text-cyan-300">{receiptModal.transactionId}</span>
+                <span className="text-stone-400 block text-[10px]">Transaction ID:</span>
+                <span className="font-mono text-orange-300">{receiptModal.transactionId}</span>
               </div>
               <div>
                 <span className="text-slate-400 block text-[10px]">Student Name:</span>

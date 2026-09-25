@@ -73,6 +73,7 @@ export const registerUser = async (req, res) => {
 // @access  Public
 export const loginUser = async (req, res) => {
   try {
+    const { email, password } = req.body;
     const cleanEmail = email ? email.toLowerCase().trim() : '';
     if (!cleanEmail || !password) {
       return res.status(400).json({

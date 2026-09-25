@@ -213,7 +213,7 @@ const CampusSafetyPage = () => {
                         {inc.incidentType}
                       </span>
                       {inc.isAnonymous && (
-                        <span className="text-[10px] font-mono text-cyan-300 flex items-center gap-1">
+                        <span className="text-[10px] font-mono text-orange-300 flex items-center gap-1">
                           <EyeOff className="w-3 h-3" /> Anonymous
                         </span>
                       )}
@@ -221,29 +221,29 @@ const CampusSafetyPage = () => {
                     <h4 className="text-sm font-bold text-white">{inc.location}</h4>
                   </div>
 
-                  <span className="text-[10px] font-mono text-slate-400">
+                  <span className="text-[10px] font-mono text-stone-400">
                     {new Date(inc.date).toLocaleDateString()} • {inc.time}
                   </span>
                 </div>
 
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-stone-300 leading-relaxed">
                   {inc.description}
                 </p>
 
                 {/* Status & Action */}
                 <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1.5 text-xs">
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Investigation Status:</span>
-                    <span className="font-semibold text-cyan-300">{inc.status}</span>
+                    <span className="text-stone-400">Investigation Status:</span>
+                    <span className="font-semibold text-orange-400">{inc.status}</span>
                   </div>
                   {inc.actionTaken && (
-                    <div className="text-[11px] text-slate-300 pt-1 border-t border-white/5">
+                    <div className="text-[11px] text-stone-300 pt-1 border-t border-white/5">
                       <strong className="text-emerald-400">Action Enforced: </strong>
                       {inc.actionTaken}
                     </div>
                   )}
                   {inc.investigator && (
-                    <div className="text-[10px] text-slate-400 font-mono">
+                    <div className="text-[10px] text-stone-400 font-mono">
                       Assigned Officer: {inc.investigator}
                     </div>
                   )}
@@ -258,7 +258,7 @@ const CampusSafetyPage = () => {
           {/* Emergency Hotlines Directory */}
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <PhoneCall className="w-5 h-5 text-cyan-400" />
+              <PhoneCall className="w-5 h-5 text-orange-400" />
               <span>24/7 Campus Emergency Desk</span>
             </h2>
 
@@ -267,20 +267,20 @@ const CampusSafetyPage = () => {
                 <GlassCard key={idx} hoverEffect className="p-4 space-y-1.5">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-white">{contact.unit}</span>
-                    <Badge variant="cyan" size="xs">
+                    <Badge variant="orange" size="xs">
                       {contact.type}
                     </Badge>
                   </div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-400 text-[11px]">{contact.location}</span>
+                    <span className="text-stone-400 text-[11px]">{contact.location}</span>
                     <a
                       href={`tel:${contact.phone}`}
-                      className="font-mono font-bold text-cyan-300 hover:underline"
+                      className="font-mono font-bold text-orange-300 hover:text-orange-200 hover:underline"
                     >
                       {contact.phone}
                     </a>
                   </div>
-                  <span className="text-[10px] text-slate-500 font-mono block">
+                  <span className="text-[10px] text-stone-400 font-mono block">
                     Availability: {contact.available}
                   </span>
                 </GlassCard>
@@ -295,7 +295,7 @@ const CampusSafetyPage = () => {
               <span>Campus Code of Conduct & Anti-Ragging Rules</span>
             </h3>
 
-            <ul className="space-y-2 text-xs text-slate-300">
+            <ul className="space-y-2 text-xs text-stone-300">
               {codeOfConduct.map((rule, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0" />
@@ -313,7 +313,7 @@ const CampusSafetyPage = () => {
           <div className="max-w-lg w-full glass-panel p-6 sm:p-8 rounded-3xl border border-rose-500/30 space-y-5 shadow-2xl relative my-8">
             <button
               onClick={() => setReportModalOpen(false)}
-              className="absolute top-5 right-5 p-1 text-slate-400 hover:text-white"
+              className="absolute top-5 right-5 p-1 text-stone-400 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
@@ -331,10 +331,10 @@ const CampusSafetyPage = () => {
             <div className="p-3 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between">
               <div className="space-y-0.5">
                 <span className="text-xs font-semibold text-white flex items-center gap-1.5">
-                  <EyeOff className="w-3.5 h-3.5 text-cyan-400" />
+                  <EyeOff className="w-3.5 h-3.5 text-orange-400" />
                   Anonymous Reporting Mode
                 </span>
-                <span className="text-[10px] text-slate-400 block">
+                <span className="text-[10px] text-stone-400 block">
                   Your name, roll number, and student IP will not be logged.
                 </span>
               </div>
@@ -343,7 +343,7 @@ const CampusSafetyPage = () => {
                 type="checkbox"
                 checked={isAnonymous}
                 onChange={(e) => setIsAnonymous(e.target.checked)}
-                className="w-5 h-5 accent-cyan-400 cursor-pointer"
+                className="w-5 h-5 accent-orange-500 cursor-pointer"
               />
             </div>
 

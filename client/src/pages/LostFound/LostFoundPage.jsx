@@ -201,8 +201,8 @@ const LostFoundPage = () => {
                     ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30'
                     : t === 'Found'
                     ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/30'
-                    : 'bg-cyan-500 text-black shadow-lg shadow-cyan-500/30'
-                  : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                    : 'bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold shadow-lg shadow-orange-500/30'
+                  : 'bg-white/5 text-stone-300 hover:bg-white/10'
               }`}
             >
               {t === 'All' ? 'All Items' : t === 'Lost' ? 'Lost Belongings' : 'Found Items'}
@@ -225,7 +225,7 @@ const LostFoundPage = () => {
                     <Badge variant={isLost ? 'rose' : 'emerald'} size="xs">
                       {isLost ? 'MISSING / LOST' : 'FOUND & RECOVERED'}
                     </Badge>
-                    <span className="text-[10px] font-mono text-slate-400 px-2 py-0.5 rounded bg-white/5 border border-white/10">
+                    <span className="text-[10px] font-mono text-stone-300 px-2 py-0.5 rounded bg-white/5 border border-white/10">
                       {item.category}
                     </span>
                   </div>
@@ -252,18 +252,18 @@ const LostFoundPage = () => {
                 )}
 
                 {/* Description */}
-                <p className="text-xs text-slate-300 leading-relaxed line-clamp-3 mb-3">
+                <p className="text-xs text-stone-300 leading-relaxed line-clamp-3 mb-3">
                   {item.description}
                 </p>
 
                 {/* Location & Time Box */}
                 <div className="p-3 rounded-xl bg-black/30 border border-white/5 text-[11px] space-y-1.5">
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                  <div className="flex items-center gap-2 text-stone-300">
+                    <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0" />
                     <span>Location: <strong className="text-white">{item.location}</strong></span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                  <div className="flex items-center gap-2 text-stone-300">
+                    <Clock className="w-3.5 h-3.5 text-stone-400 shrink-0" />
                     <span>Reported: {new Date(item.dateReported).toLocaleDateString()} • {item.approximateTime}</span>
                   </div>
                 </div>
@@ -271,10 +271,10 @@ const LostFoundPage = () => {
 
               {/* Card Footer with Contact & Claim */}
               <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
-                <div className="text-[11px] text-slate-400 overflow-hidden">
-                  <span className="block truncate">Contact: <strong className="text-slate-200">{item.contactName}</strong></span>
+                <div className="text-[11px] text-stone-300 overflow-hidden">
+                  <span className="block truncate">Contact: <strong className="text-stone-100">{item.contactName}</strong></span>
                   {item.contactPhone && (
-                    <span className="text-[10px] font-mono text-cyan-300 block truncate">{item.contactPhone}</span>
+                    <span className="text-[10px] font-mono text-orange-300 block truncate">{item.contactPhone}</span>
                   )}
                 </div>
 
@@ -455,20 +455,20 @@ const LostFoundPage = () => {
       {/* Claim Modal */}
       {claimingItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in">
-          <div className="max-w-md w-full glass-panel p-6 rounded-3xl border border-cyan-500/30 space-y-4 shadow-2xl relative">
+          <div className="max-w-md w-full glass-panel p-6 rounded-3xl border border-orange-500/30 space-y-4 shadow-2xl relative">
             <button
               onClick={() => setClaimingItem(null)}
-              className="absolute top-5 right-5 p-1 text-slate-400 hover:text-white"
+              className="absolute top-5 right-5 p-1 text-stone-400 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
 
             <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-cyan-400" />
+              <CheckCircle2 className="w-5 h-5 text-orange-400" />
               Claim: {claimingItem.title}
             </h3>
 
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-stone-300">
               Please enter proof of ownership or exact description (e.g. serial numbers, specific stickers, contents of wallet) so the campus security desk or finder can verify.
             </p>
 
@@ -479,7 +479,7 @@ const LostFoundPage = () => {
                 placeholder="Explain how you can prove ownership of this item..."
                 value={claimNotes}
                 onChange={(e) => setClaimNotes(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                className="w-full px-3 py-2 rounded-xl bg-stone-900 border border-white/10 text-white text-xs placeholder-stone-500 focus:outline-none focus:border-orange-400"
               />
 
               {claimSuccess && (

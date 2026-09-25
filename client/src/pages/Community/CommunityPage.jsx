@@ -145,24 +145,24 @@ const CommunityPage = () => {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <PageHeader
-        badge={<Badge variant="cyan">Campus Network</Badge>}
+        badge={<Badge variant="orange">Campus Network</Badge>}
         title="Student Community Feed"
         subtitle="Connect with fellow engineers, form hackathon squads, share project breakthroughs, and ask academic questions."
       />
 
       {/* Post Composer Card */}
       {isAuthenticated && (
-        <GlassCard className="p-5 border-indigo-500/20 shadow-glass-glow">
+        <GlassCard className="p-5 border-orange-500/20 shadow-glass-glow">
           <form onSubmit={handleCreatePost} className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <MessageSquare className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="text-xs font-semibold text-white flex items-center gap-1.5">
+                <MessageSquare className="w-3.5 h-3.5 text-orange-400" />
                 Initiate Campus Discussion
               </span>
               <select
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
-                className="px-2.5 py-1 rounded-lg bg-slate-900 border border-white/10 text-xs text-slate-200"
+                className="px-2.5 py-1 rounded-lg bg-stone-900 border border-white/10 text-xs text-stone-200"
               >
                 <option value="General">General</option>
                 <option value="Academics">Academics</option>
@@ -179,7 +179,7 @@ const CommunityPage = () => {
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               placeholder="Discussion topic or query headline..."
-              className="w-full px-3 py-2 rounded-xl bg-slate-900/60 border border-white/10 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50"
+              className="w-full px-3 py-2 rounded-xl bg-stone-900/80 border border-white/10 text-sm text-stone-100 placeholder:text-stone-500 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-500/30"
             />
 
             <textarea
@@ -188,7 +188,7 @@ const CommunityPage = () => {
               value={newContent}
               onChange={(e) => setNewContent(e.target.value)}
               placeholder="What are you working on? (Raft consensus, hackathon team formation, etc.)..."
-              className="w-full px-3 py-2 rounded-xl bg-slate-900/60 border border-white/10 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50"
+              className="w-full px-3 py-2 rounded-xl bg-stone-900/80 border border-white/10 text-sm text-stone-100 placeholder:text-stone-500 focus:outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-500/30"
             />
 
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
@@ -197,7 +197,7 @@ const CommunityPage = () => {
                 value={newTags}
                 onChange={(e) => setNewTags(e.target.value)}
                 placeholder="Tags (comma-separated: Go, React, Hackathon)"
-                className="w-full sm:w-80 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-white/10 text-xs text-slate-300 placeholder:text-slate-500"
+                className="w-full sm:w-80 px-3 py-1.5 rounded-lg bg-stone-900/80 border border-white/10 text-xs text-stone-200 placeholder:text-stone-500"
               />
 
               <GlassButton
@@ -224,8 +224,8 @@ const CommunityPage = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                  : 'text-slate-400 hover:text-white bg-slate-900/50 hover:bg-white/5 border border-white/5'
+                  ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40'
+                  : 'text-stone-300 hover:text-white bg-stone-900/50 hover:bg-stone-800/80 border border-white/10'
               }`}
             >
               {cat}
@@ -265,17 +265,17 @@ const CommunityPage = () => {
                 {/* Author Info & Header */}
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-xs text-white uppercase">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-orange-500 to-amber-600 flex items-center justify-center font-bold text-xs text-white uppercase shadow-sm">
                       {post.authorName?.[0] || 'U'}
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-semibold text-white">{post.authorName}</span>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/20 uppercase">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-orange-500/15 text-orange-300 border border-orange-500/20 uppercase">
                           {post.authorRole} • {post.authorDepartment}
                         </span>
                       </div>
-                      <span className="text-[10px] text-slate-500 font-mono">
+                      <span className="text-[10px] text-stone-400 font-mono">
                         {new Date(post.createdAt).toLocaleDateString(undefined, {
                           month: 'short',
                           day: 'numeric',
@@ -287,13 +287,13 @@ const CommunityPage = () => {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Badge variant="cyan" size="xs">
+                    <Badge variant="orange" size="xs">
                       {post.category}
                     </Badge>
                     {(post.author === user?._id || user?.role === 'super_admin') && (
                       <button
                         onClick={() => handleDeletePost(post._id)}
-                        className="p-1 rounded text-slate-500 hover:text-rose-400 hover:bg-white/5 transition-colors"
+                        className="p-1 rounded text-stone-400 hover:text-rose-400 hover:bg-white/5 transition-colors"
                         title="Delete Post"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -307,7 +307,7 @@ const CommunityPage = () => {
                   <h3 className="text-base font-bold text-white mb-2 leading-snug">
                     {post.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line">
+                  <p className="text-xs sm:text-sm text-stone-200 leading-relaxed whitespace-pre-line">
                     {post.content}
                   </p>
                 </div>
@@ -318,7 +318,7 @@ const CommunityPage = () => {
                     {post.tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="text-[10px] font-mono text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20"
+                        className="text-[10px] font-mono text-orange-300 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20"
                       >
                         #{tag}
                       </span>
@@ -327,7 +327,7 @@ const CommunityPage = () => {
                 )}
 
                 {/* Action Controls: Like & Comment count */}
-                <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+                <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-stone-300">
                   <div className="flex items-center gap-4">
                     <button
                       onClick={() => handleToggleLike(post._id)}
@@ -342,7 +342,7 @@ const CommunityPage = () => {
                     </button>
 
                     <div className="flex items-center gap-1.5">
-                      <MessageSquare className="w-4 h-4 text-cyan-400" />
+                      <MessageSquare className="w-4 h-4 text-orange-400" />
                       <span>{post.comments?.length || 0} Replies</span>
                     </div>
                   </div>
@@ -350,21 +350,21 @@ const CommunityPage = () => {
 
                 {/* Comments Thread */}
                 {post.comments && post.comments.length > 0 && (
-                  <div className="space-y-2 pt-2 border-t border-white/5 bg-slate-900/40 p-3 rounded-xl">
+                  <div className="space-y-2 pt-2 border-t border-white/5 bg-stone-900/60 p-3 rounded-xl border border-white/5">
                     {post.comments.map((cm, cIdx) => (
                       <div key={cIdx} className="text-xs space-y-0.5">
                         <div className="flex items-center justify-between text-[11px]">
-                          <span className="font-semibold text-slate-200">
+                          <span className="font-semibold text-stone-100">
                             {cm.authorName}{' '}
-                            <span className="text-[10px] font-mono text-indigo-400">
+                            <span className="text-[10px] font-mono text-orange-300">
                               ({cm.authorRole})
                             </span>
                           </span>
-                          <span className="text-[10px] text-slate-500">
+                          <span className="text-[10px] text-stone-400">
                             {new Date(cm.createdAt).toLocaleDateString()}
                           </span>
                         </div>
-                        <p className="text-slate-300 text-xs pl-1">{cm.content}</p>
+                        <p className="text-stone-300 text-xs pl-1">{cm.content}</p>
                       </div>
                     ))}
                   </div>
@@ -383,7 +383,7 @@ const CommunityPage = () => {
                         if (e.key === 'Enter') handleAddComment(post._id);
                       }}
                       placeholder="Write a peer response (Enter to send)..."
-                      className="flex-1 px-3 py-1.5 rounded-xl bg-slate-900/80 border border-white/10 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50"
+                      className="flex-1 px-3 py-1.5 rounded-xl bg-stone-900/80 border border-white/10 text-xs text-stone-200 placeholder:text-stone-500 focus:outline-none focus:border-orange-400"
                     />
                     <GlassButton
                       variant="secondary"

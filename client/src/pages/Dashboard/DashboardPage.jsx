@@ -113,22 +113,22 @@ const DashboardPage = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Operating Greeting Banner */}
-      <div className="relative rounded-3xl p-6 sm:p-8 glass-panel border border-indigo-500/20 overflow-hidden shadow-glass-glow">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-cyan-500/15 via-indigo-600/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="relative rounded-3xl p-6 sm:p-8 glass-panel border border-orange-500/25 overflow-hidden shadow-glass-glow">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-orange-500/15 via-amber-600/10 to-transparent blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-xs text-cyan-300 font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-xs text-orange-300 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
               SYSTEM NODE ACTIVE // ROLL: {user?.studentId || '22BCSE1042'}
             </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               {getGreeting()},{' '}
-              <span className="bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 bg-clip-text text-transparent">
                 {user?.name?.split(' ')[0] || 'Scholar'}
               </span>
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+            <p className="text-xs sm:text-sm text-stone-300 max-w-xl">
               Semester 6 • {user?.department || 'Computer Science & Engineering'}. Here is your live campus operational intelligence briefing.
             </p>
           </div>
@@ -162,7 +162,7 @@ const DashboardPage = () => {
           value={`${avgAttendance}%`}
           change={avgAttendance >= 75 ? 'Safe (>75% rule)' : 'Shortage Alert'}
           changeType={avgAttendance >= 75 ? 'positive' : 'negative'}
-          color="cyan"
+          color="orange"
         />
         <StatCard
           icon={Award}
@@ -193,17 +193,17 @@ const DashboardPage = () => {
       {/* Quick Access Action Deck */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         {[
-          { label: 'Placements & CRT', path: '/placements', icon: Briefcase, color: 'text-cyan-400', badge: 'Drives' },
+          { label: 'Placements & CRT', path: '/placements', icon: Briefcase, color: 'text-orange-400', badge: 'Drives' },
           { label: 'Sudden Circulars', path: '/circulars', icon: Megaphone, color: 'text-rose-400', badge: 'Flash' },
           { label: 'Fee Payments', path: '/fees', icon: CreditCard, color: 'text-emerald-400', badge: 'Pay' },
-          { label: 'Exams & Admit Card', path: '/exams', icon: FileText, color: 'text-indigo-400', badge: 'Hall Ticket' },
-          { label: 'Semesters & CGPA', path: '/semesters', icon: Calculator, color: 'text-purple-400', badge: 'Calc' },
+          { label: 'Exams & Admit Card', path: '/exams', icon: FileText, color: 'text-amber-400', badge: 'Hall Ticket' },
+          { label: 'Semesters & CGPA', path: '/semesters', icon: Calculator, color: 'text-orange-400', badge: 'Calc' },
           { label: 'Lost & Belongings', path: '/lost-found', icon: Search, color: 'text-amber-400', badge: 'Claims' },
         ].map((item) => (
           <Link
             key={item.path}
             to={item.path}
-            className="p-3.5 rounded-2xl glass-panel border border-white/10 hover:border-cyan-400/40 hover:bg-white/10 transition-all flex flex-col items-center text-center gap-2 group"
+            className="p-3.5 rounded-2xl glass-panel border border-white/10 hover:border-orange-400/40 hover:bg-white/10 transition-all flex flex-col items-center text-center gap-2 group"
           >
             <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform">
               <item.icon className={`w-5 h-5 ${item.color}`} />
@@ -211,7 +211,7 @@ const DashboardPage = () => {
             <span className="text-xs font-semibold text-white leading-tight">
               {item.label}
             </span>
-            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-slate-400 border border-white/10">
+            <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-stone-400 border border-white/10">
               {item.badge}
             </span>
           </Link>
@@ -224,10 +224,10 @@ const DashboardPage = () => {
         <div className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-cyan-400" />
+              <Briefcase className="w-5 h-5 text-orange-400" />
               <span>Campus Placement Drives & CRT Sprints</span>
             </h2>
-            <Link to="/placements" className="text-xs text-cyan-400 hover:underline">
+            <Link to="/placements" className="text-xs text-orange-400 hover:underline">
               View All Drives →
             </Link>
           </div>
@@ -244,24 +244,24 @@ const DashboardPage = () => {
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2">
                       <h4 className="text-sm font-bold text-white">{drive.companyName}</h4>
-                      <Badge variant="cyan" size="xs">
+                      <Badge variant="orange" size="xs">
                         {drive.category}
                       </Badge>
                     </div>
-                    <p className="text-xs text-slate-300">{drive.role}</p>
-                    <span className="text-[11px] text-slate-400 flex items-center gap-1 font-mono">
-                      <Calendar className="w-3 h-3 text-cyan-400" />
+                    <p className="text-xs text-stone-300">{drive.role}</p>
+                    <span className="text-[11px] text-stone-400 flex items-center gap-1 font-mono">
+                      <Calendar className="w-3 h-3 text-orange-400" />
                       Drive: {new Date(drive.driveDate).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
 
                 <div className="text-right shrink-0">
-                  <span className="text-xs sm:text-sm font-mono font-bold text-cyan-300 block">
+                  <span className="text-xs sm:text-sm font-mono font-bold text-orange-300 block">
                     {drive.ctc}
                   </span>
                   <Link to="/placements">
-                    <span className="text-[11px] text-cyan-400 hover:underline font-semibold mt-1 inline-block">
+                    <span className="text-[11px] text-orange-400 hover:underline font-semibold mt-1 inline-block">
                       Apply Now →
                     </span>
                   </Link>
@@ -301,20 +301,20 @@ const DashboardPage = () => {
                         ? 'rose'
                         : circ.priority === 'Urgent'
                         ? 'amber'
-                        : 'cyan'
+                        : 'orange'
                     }
                     size="xs"
                   >
                     {circ.priority}
                   </Badge>
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-[10px] text-stone-400 font-mono">
                     {new Date(circ.effectiveDate).toLocaleDateString()}
                   </span>
                 </div>
                 <h4 className="text-xs font-bold text-white line-clamp-1 mb-1">
                   {circ.title}
                 </h4>
-                <p className="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">
+                <p className="text-[11px] text-stone-300 line-clamp-2 leading-relaxed">
                   {circ.summary}
                 </p>
               </GlassCard>
@@ -329,10 +329,10 @@ const DashboardPage = () => {
         <div className="lg:col-span-6 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <FileText className="w-5 h-5 text-indigo-400" />
+              <FileText className="w-5 h-5 text-amber-400" />
               <span>Upcoming Semester Exams</span>
             </h2>
-            <Link to="/exams" className="text-xs text-indigo-400 hover:underline">
+            <Link to="/exams" className="text-xs text-amber-400 hover:underline">
               Digital Hall Ticket →
             </Link>
           </div>
@@ -342,22 +342,22 @@ const DashboardPage = () => {
               <GlassCard key={exam._id} hoverEffect className="p-4 flex items-center justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] text-cyan-300 font-bold px-1.5 py-0.5 rounded bg-cyan-500/10">
+                    <span className="font-mono text-[10px] text-orange-300 font-bold px-1.5 py-0.5 rounded bg-orange-500/10">
                       {exam.subjectCode}
                     </span>
-                    <Badge variant="purple" size="xs">
+                    <Badge variant="amber" size="xs">
                       {exam.examType}
                     </Badge>
                   </div>
                   <h4 className="text-sm font-semibold text-white line-clamp-1">{exam.subjectName}</h4>
-                  <span className="text-xs text-slate-400 flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-slate-500" />
+                  <span className="text-xs text-stone-400 flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-stone-500" />
                     {exam.hallNumber} • Slot: {exam.session}
                   </span>
                 </div>
 
                 <div className="text-right shrink-0">
-                  <span className="text-xs font-mono text-cyan-300 font-bold block">
+                  <span className="text-xs font-mono text-orange-300 font-bold block">
                     {new Date(exam.date).toLocaleDateString()}
                   </span>
                   <Link to="/exams">

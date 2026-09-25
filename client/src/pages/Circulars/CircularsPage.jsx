@@ -146,12 +146,12 @@ const CircularsPage = () => {
                       REF: {circ.circularNumber}
                     </span>
                     <Badge
-                      variant={isFlash ? 'rose' : isUrgent ? 'amber' : 'cyan'}
+                      variant={isFlash ? 'rose' : isUrgent ? 'amber' : 'orange'}
                       size="xs"
                     >
                       {circ.priority}
                     </Badge>
-                    <Badge variant="purple" size="xs">
+                    <Badge variant="orange" size="xs">
                       {circ.category}
                     </Badge>
                     <span className="text-[11px] text-slate-400 flex items-center gap-1">
@@ -197,28 +197,28 @@ const CircularsPage = () => {
       {/* Official Circular Document Modal */}
       {viewingCircular && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in overflow-y-auto">
-          <div className="max-w-2xl w-full bg-[#0a0f24] p-6 sm:p-8 rounded-3xl border border-white/20 space-y-6 shadow-2xl relative my-8">
+          <div className="max-w-2xl w-full bg-stone-950 p-6 sm:p-8 rounded-3xl border border-white/20 space-y-6 shadow-2xl relative my-8">
             <button
               onClick={() => setViewingCircular(null)}
-              className="absolute top-5 right-5 p-1.5 rounded-full bg-white/10 text-slate-300 hover:text-white transition-colors"
+              className="absolute top-5 right-5 p-1.5 rounded-full bg-white/10 text-stone-300 hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Official University Header */}
             <div className="text-center pb-4 border-b-2 border-white/20 space-y-1">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 p-[1.5px] mx-auto mb-2">
-                <div className="w-full h-full bg-[#050713] rounded-[14px] flex items-center justify-center">
-                  <img src="/logo.svg" alt="CampusOS" className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-500 p-[1.5px] mx-auto mb-2">
+                <div className="w-full h-full bg-stone-900 rounded-[14px] flex items-center justify-center">
+                  <img src="/logo.svg" alt="CAMPII" className="w-6 h-6" />
                 </div>
               </div>
               <h2 className="text-base sm:text-lg font-black tracking-wide text-white uppercase">
-                CAMPUS OPERATING SYSTEM (CAMPUSOS) UNIVERSITY
+                CAMPII CONNECTED UNIVERSITY
               </h2>
-              <p className="text-[11px] text-slate-400 uppercase tracking-widest font-mono">
+              <p className="text-[11px] text-stone-400 uppercase tracking-widest font-mono">
                 {viewingCircular.authorityTitle || 'OFFICE OF THE REGISTRAR & CENTRAL SECRETARIAT'}
               </p>
-              <p className="text-[10px] text-slate-500 font-mono">
+              <p className="text-[10px] text-stone-500 font-mono">
                 CIRCULAR REF NO: {viewingCircular.circularNumber} • DATE: {new Date(viewingCircular.effectiveDate).toLocaleDateString()}
               </p>
             </div>
@@ -226,7 +226,7 @@ const CircularsPage = () => {
             {/* Circular Subject & Priority */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono text-slate-400">
+                <span className="text-[11px] font-mono text-stone-400">
                   CATEGORY: <strong>{viewingCircular.category}</strong>
                 </span>
                 <span className="text-[11px] font-mono text-rose-400 font-bold uppercase">
@@ -239,21 +239,21 @@ const CircularsPage = () => {
             </div>
 
             {/* Full Official Body Text */}
-            <div className="p-4 rounded-xl bg-black/40 border border-white/10 text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line font-serif max-h-72 overflow-y-auto">
+            <div className="p-4 rounded-xl bg-black/40 border border-white/10 text-xs sm:text-sm text-stone-200 leading-relaxed whitespace-pre-line font-serif max-h-72 overflow-y-auto">
               {viewingCircular.fullText}
             </div>
 
             {/* Directives & Signatures */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-4 border-t border-white/10 text-xs text-slate-400 gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-4 border-t border-white/10 text-xs text-stone-400 gap-4">
               <div>
-                <p className="text-[11px] font-semibold text-slate-300">Action Required:</p>
+                <p className="text-[11px] font-semibold text-stone-300">Action Required:</p>
                 <p className="text-[11px] text-amber-300">{viewingCircular.actionRequired}</p>
               </div>
 
               <div className="text-right sm:border-l sm:border-white/10 sm:pl-4">
-                <div className="font-mono text-xs font-bold text-cyan-300">By Order of Vice Chancellor</div>
+                <div className="font-mono text-xs font-bold text-orange-300">By Order of Vice Chancellor</div>
                 <div className="text-[11px] text-white font-semibold">{viewingCircular.issuedBy}</div>
-                <div className="text-[10px] text-slate-500 font-mono">Digital Signature Verified (CampusOS HSM)</div>
+                <div className="text-[10px] text-stone-500 font-mono">Digital Signature Verified (CAMPII HSM)</div>
               </div>
             </div>
 

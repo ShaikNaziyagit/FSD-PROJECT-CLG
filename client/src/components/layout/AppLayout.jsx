@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import FlashTicker from '../common/FlashTicker';
+import CampiiLogo from '../common/CampiiLogo';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
 import {
@@ -61,7 +62,7 @@ const AppLayout = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#050713] text-slate-100 tech-grid-bg">
+    <div className="flex min-h-screen bg-transparent text-slate-100">
       {/* Desktop Sidebar */}
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
@@ -71,21 +72,21 @@ const AppLayout = () => {
         <FlashTicker />
 
         {/* Top App Header */}
-        <header className="sticky top-0 z-30 h-16 border-b border-white/10 glass-panel px-4 lg:px-8 flex items-center justify-between">
+        <header className="sticky top-0 z-30 h-16 border-b border-white/15 glass-panel px-4 lg:px-8 flex items-center justify-between backdrop-blur-xl">
           <div className="flex items-center gap-3">
             {/* Mobile drawer button */}
             <button
               onClick={() => setMobileDrawerOpen(true)}
-              className="md:hidden p-2 rounded-xl bg-slate-800/60 border border-white/10 text-slate-300 hover:text-white"
+              className="md:hidden p-2 rounded-xl bg-stone-900/80 border border-white/15 text-slate-200 hover:text-white"
             >
               <Menu className="w-5 h-5" />
             </button>
 
             {/* Current Campus Layer Indicator */}
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-xs font-mono uppercase text-slate-400 hidden sm:inline-block">
-                CampusOS Node // {user?.department || 'Main Campus'} • {user?.studentId || 'FACULTY'}
+              <span className="w-2.5 h-2.5 rounded-full bg-orange-400 animate-pulse shadow-[0_0_8px_#f97316]" />
+              <span className="text-xs font-mono font-bold uppercase text-orange-300 hidden sm:inline-block">
+                CAMPII 3D NODE // {user?.department || 'Main Campus'} • {user?.studentId || 'FACULTY'}
               </span>
             </div>
           </div>
@@ -96,24 +97,24 @@ const AppLayout = () => {
             <div className="relative">
               <button
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className="relative p-2 rounded-xl bg-slate-800/60 border border-white/10 text-slate-300 hover:text-white hover:border-white/20 transition-all"
+                className="relative p-2 rounded-xl bg-stone-900/80 border border-white/15 text-slate-200 hover:text-white hover:border-orange-400/50 transition-all shadow-sm"
               >
                 <Bell className="w-4 h-4" />
                 {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-cyan-400 text-[10px] font-bold text-black flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-orange-500 text-[10px] font-black text-black flex items-center justify-center animate-pulse">
                     {unreadCount}
                   </span>
                 )}
               </button>
 
               {notificationsOpen && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl glass-panel p-4 shadow-glass-glow border border-indigo-500/30 animate-in fade-in zoom-in-95 z-50">
+                <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl glass-panel p-4 shadow-2xl border border-orange-500/30 animate-in fade-in zoom-in-95 z-50">
                   <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
-                    <span className="text-sm font-semibold text-white">System Notifications</span>
+                    <span className="text-sm font-bold text-white">System Notifications</span>
                     {unreadCount > 0 && (
                       <button
                         onClick={markAllAsRead}
-                        className="text-xs text-cyan-400 hover:underline"
+                        className="text-xs text-orange-400 font-bold hover:underline"
                       >
                         Clear All
                       </button>
@@ -121,7 +122,7 @@ const AppLayout = () => {
                   </div>
                   <div className="max-h-72 overflow-y-auto space-y-2">
                     {notifications.length === 0 ? (
-                      <p className="text-xs text-slate-400 text-center py-6">No notifications</p>
+                      <p className="text-xs text-slate-300 text-center py-6">No notifications</p>
                     ) : (
                       notifications.map((n) => (
                         <div
@@ -132,11 +133,11 @@ const AppLayout = () => {
                             setNotificationsOpen(false);
                           }}
                           className={`p-2.5 rounded-xl cursor-pointer text-xs transition-colors ${
-                            n.isRead ? 'bg-white/5 text-slate-300' : 'bg-cyan-500/10 text-white border border-cyan-500/20'
+                            n.isRead ? 'bg-white/5 text-slate-200' : 'bg-orange-500/20 text-white border border-orange-400/30'
                           } hover:bg-white/10`}
                         >
-                          <div className="font-semibold mb-0.5">{n.title}</div>
-                          <div className="text-slate-400 text-[11px] line-clamp-2">{n.message}</div>
+                          <div className="font-bold mb-0.5 text-white">{n.title}</div>
+                          <div className="text-slate-300 text-[11px] line-clamp-2">{n.message}</div>
                         </div>
                       ))
                     )}
@@ -148,14 +149,14 @@ const AppLayout = () => {
             {/* Quick Profile Pill */}
             <Link
               to="/profile"
-              className="flex items-center gap-2 p-1.5 pr-3 rounded-full bg-slate-800/60 border border-white/10 hover:border-cyan-400/40 transition-all"
+              className="flex items-center gap-2 p-1.5 pr-3 rounded-full bg-stone-900/80 border border-white/15 hover:border-orange-400/60 shadow-sm transition-all"
             >
               <img
                 src={user?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150'}
                 alt={user?.name}
-                className="w-7 h-7 rounded-full object-cover ring-1 ring-cyan-400/40"
+                className="w-7 h-7 rounded-full object-cover ring-1 ring-orange-400/60"
               />
-              <span className="text-xs font-medium text-slate-200 hidden sm:inline-block">
+              <span className="text-xs font-bold text-white hidden sm:inline-block">
                 {user?.name?.split(' ')[0]}
               </span>
             </Link>
@@ -166,7 +167,7 @@ const AppLayout = () => {
                 logout();
                 navigate('/');
               }}
-              className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20 transition-all"
+              className="p-2 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 hover:bg-rose-500/25 transition-all shadow-sm"
               title="Logout"
             >
               <LogOut className="w-4 h-4" />
@@ -185,17 +186,14 @@ const AppLayout = () => {
         <div className="fixed inset-0 z-50 md:hidden flex">
           <div
             onClick={() => setMobileDrawerOpen(false)}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md"
           />
-          <div className="relative w-72 bg-[#080d1e] border-r border-white/10 h-full p-4 flex flex-col z-10 animate-in slide-in-from-left">
+          <div className="relative w-72 glass-panel border-r border-white/15 h-full p-4 flex flex-col z-10 animate-in slide-in-from-left">
             <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
-              <div className="flex items-center gap-2">
-                <img src="/logo.svg" alt="CampusOS" className="w-6 h-6" />
-                <span className="font-extrabold text-white">CampusOS</span>
-              </div>
+              <CampiiLogo size={32} showWordmark={true} />
               <button
                 onClick={() => setMobileDrawerOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-white"
+                className="p-1.5 text-slate-300 hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -210,16 +208,16 @@ const AppLayout = () => {
                     key={item.path}
                     to={item.path}
                     onClick={() => setMobileDrawerOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium ${
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold ${
                       isActive
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        ? 'bg-orange-500/20 text-orange-200 border border-orange-400/40 shadow-sm'
+                        : 'text-slate-300 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     <Icon className="w-4 h-4 shrink-0" />
                     <span>{item.label}</span>
                     {item.badge && (
-                      <span className="ml-auto text-[8px] font-mono px-1 py-0.5 rounded bg-white/10 text-cyan-300 font-bold">
+                      <span className="ml-auto text-[8px] font-mono px-1 py-0.5 rounded bg-orange-500/20 text-orange-200 font-bold border border-orange-400/40">
                         {item.badge}
                       </span>
                     )}
@@ -235,10 +233,10 @@ const AppLayout = () => {
                   setMobileDrawerOpen(false);
                   navigate('/');
                 }}
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-rose-500/10 text-rose-300 border border-rose-500/20 text-xs font-medium"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-rose-500/20 text-rose-200 border border-rose-500/30 text-xs font-bold"
               >
                 <LogOut className="w-4 h-4" />
-                <span>Disconnect</span>
+                <span>Disconnect Node</span>
               </button>
             </div>
           </div>

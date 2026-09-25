@@ -11,11 +11,11 @@ const LoadingSpinner = ({ size = 'md', label = 'Loading CampusOS...' }) => {
     <div className="flex flex-col items-center justify-center p-8 gap-3">
       <div className="relative">
         <div
-          className={`${sizeMap} rounded-full border-indigo-500/20 border-t-cyan-400 border-r-indigo-500 animate-spin`}
+          className={`${sizeMap} rounded-full border-orange-500/20 border-t-orange-500 border-r-amber-400 animate-spin`}
         />
-        <div className="absolute inset-0 rounded-full blur-sm bg-cyan-400/20 animate-pulse" />
+        <div className="absolute inset-0 rounded-full blur-sm bg-orange-500/20 animate-pulse" />
       </div>
-      {label && <p className="text-xs text-slate-400 font-mono tracking-wider animate-pulse">{label}</p>}
+      {label && <p className="text-xs text-orange-200/80 font-mono tracking-wider animate-pulse">{label}</p>}
     </div>
   );
 };

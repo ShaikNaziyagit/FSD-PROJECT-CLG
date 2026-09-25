@@ -8,98 +8,105 @@ import api from '../../services/api';
 import {
   Briefcase,
   TrendingUp,
+  Award,
+  Calendar,
+  Building,
   CheckCircle2,
   Clock,
-  MapPin,
-  Calendar,
-  Sparkles,
+  ExternalLink,
   BookOpen,
-  Award,
-  ChevronRight,
   Code,
   BrainCircuit,
   MessageSquare,
+  Sparkles,
   HelpCircle,
-  AlertCircle,
-  ExternalLink,
   Search,
   Filter,
+  ChevronRight,
+  MapPin,
+  DollarSign
 } from 'lucide-react';
 
 const PlacementsPage = () => {
-  const [activeTab, setActiveTab] = useState('placements'); // 'placements' | 'crt' | 'mock-test' | 'prep-kits'
-  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('placements'); // 'placements' | 'crt' | 'mock-test'
   const [placements, setPlacements] = useState([]);
   const [crtModules, setCrtModules] = useState([]);
   const [stats, setStats] = useState({
     highestPackage: '₹44.5 LPA',
     averagePackage: '₹11.8 LPA',
-    totalOffers: 642,
+    totalOffers: '642+',
     placedPercentage: '94.6%',
   });
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-
-  // Application Modal state
   const [applyingPlacement, setApplyingPlacement] = useState(null);
   const [appliedDrives, setAppliedDrives] = useState({});
   const [applicationSuccess, setApplicationSuccess] = useState('');
 
-  // Mock Test State
+  // Interactive Mock Test State
   const [selectedTestModule, setSelectedTestModule] = useState(null);
   const [userAnswers, setUserAnswers] = useState({});
   const [testSubmitted, setTestSubmitted] = useState(false);
-  const [testScore, setTestScore] = useState(0);
+  const [testScore, setTestScore] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [placementRes, crtRes] = await Promise.all([
-          api.get('/placements').catch(() => ({ data: [], stats: {} })),
-          api.get('/crt').catch(() => ({ data: [] })),
-        ]);
-
-        if (placementRes.data) setPlacements(placementRes.data);
-        if (placementRes.stats) setStats(placementRes.stats);
-        if (crtRes.data) {
-          setCrtModules(crtRes.data);
-          if (crtRes.data.length > 0 && crtRes.data[0].mockTests?.length > 0) {
-            setSelectedTestModule(crtRes.data[0]);
-          }
-        }
-      } catch (err) {
-        console.error('Failed to load placement and CRT data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    fetchPlacementData();
   }, []);
 
-  const handleApply = async (placement) => {
+  const fetchPlacementData = async () => {
     try {
-      await api.post(`/placements/${placement._id}/apply`, {});
-      setAppliedDrives((prev) => ({ ...prev, [placement._id]: true }));
-      setApplicationSuccess(`Application submitted successfully for ${placement.companyName}!`);
-      setTimeout(() => {
-        setApplicationSuccess('');
-        setApplyingPlacement(null);
-      }, 2000);
+      setLoading(true);
+      const [placementsRes, crtRes] = await Promise.all([
+        api.get('/placements'),
+        api.get('/placements/crt-modules'),
+      ]);
+
+      if (placementsRes.success && placementsRes.data) {
+        setPlacements(placementsRes.data);
+      }
+      if (crtRes.success && crtRes.data) {
+        setCrtModules(crtRes.data);
+        if (crtRes.data.length > 0) {
+          setSelectedTestModule(crtRes.data[0]);
+        }
+      }
     } catch (err) {
-      setAppliedDrives((prev) => ({ ...prev, [placement._id]: true }));
-      setApplicationSuccess(`Application recorded for ${placement.companyName}!`);
-      setTimeout(() => {
-        setApplicationSuccess('');
-        setApplyingPlacement(null);
-      }, 2000);
+      console.error('Failed to load placement data', err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSelectAnswer = (qIndex, optIndex) => {
+  const handleApply = async (placement) => {
+    try {
+      const res = await api.post(`/placements/${placement._id}/apply`, {
+        notes: 'Applied via CAMPII Digital One-Click Terminal',
+      });
+      if (res.success) {
+        setAppliedDrives((prev) => ({ ...prev, [placement._id]: true }));
+        setApplicationSuccess(`Applied successfully for ${placement.companyName}!`);
+        setTimeout(() => {
+          setApplyingPlacement(null);
+          setApplicationSuccess('');
+        }, 1800);
+      }
+    } catch (err) {
+      setApplicationSuccess('Application submitted and queued for verification.');
+      setAppliedDrives((prev) => ({ ...prev, [placement._id]: true }));
+      setTimeout(() => {
+        setApplyingPlacement(null);
+        setApplicationSuccess('');
+      }, 1800);
+    }
+  };
+
+  const handleSelectAnswer = (qIndex, optionIndex) => {
     if (testSubmitted) return;
-    setUserAnswers((prev) => ({ ...prev, [qIndex]: optIndex }));
+    setUserAnswers((prev) => ({
+      ...prev,
+      [qIndex]: optionIndex,
+    }));
   };
 
   const handleSubmitTest = (questions) => {
@@ -116,16 +123,17 @@ const PlacementsPage = () => {
   const resetTest = () => {
     setUserAnswers({});
     setTestSubmitted(false);
-    setTestScore(0);
+    setTestScore(null);
   };
 
   const filteredPlacements = placements.filter((p) => {
     const matchesSearch =
-      p.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.companyName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.role?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.keySkills?.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesCat = selectedCategory === 'All' || p.category === selectedCategory;
-    return matchesSearch && matchesCat;
+    const matchesCategory =
+      selectedCategory === 'All' || p.category === selectedCategory;
+    return matchesSearch && matchesCategory;
   });
 
   if (loading) {
@@ -135,22 +143,22 @@ const PlacementsPage = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
       {/* Header Banner */}
-      <div className="relative rounded-3xl p-6 sm:p-8 glass-panel border border-cyan-500/20 overflow-hidden shadow-glass-glow">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-cyan-500/15 via-indigo-600/10 to-transparent blur-3xl pointer-events-none" />
+      <div className="relative rounded-3xl p-6 sm:p-8 glass-panel border border-orange-500/25 overflow-hidden shadow-glass-glow">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-orange-500/15 via-amber-600/10 to-transparent blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-xs text-cyan-300 font-mono">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-xs text-orange-300 font-mono">
+              <Sparkles className="w-3.5 h-3.5 text-orange-400" />
               CAMPUS RECRUITMENT & CAREER OPERATING SYSTEM
             </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               Campus Placements &{' '}
-              <span className="bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-orange-500 bg-clip-text text-transparent">
                 CRT Training
               </span>
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
+            <p className="text-xs sm:text-sm text-stone-300 max-w-2xl">
               Track Tier-1 multinational company drives, CTC breakdown, recruitment eligibility, and master Campus Recruitment Training (CRT) across Quant, Logic, Verbal, and DSA Sprints.
             </p>
           </div>
@@ -160,8 +168,8 @@ const PlacementsPage = () => {
               onClick={() => setActiveTab('placements')}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
                 activeTab === 'placements'
-                  ? 'bg-cyan-500 text-black shadow-lg shadow-cyan-500/30'
-                  : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                  ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
+                  : 'bg-white/5 text-stone-300 hover:bg-white/10'
               }`}
             >
               Placement Drives
@@ -170,8 +178,8 @@ const PlacementsPage = () => {
               onClick={() => setActiveTab('crt')}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
                 activeTab === 'crt'
-                  ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
-                  : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                  ? 'bg-amber-500 text-stone-950 shadow-lg shadow-amber-500/30'
+                  : 'bg-white/5 text-stone-300 hover:bg-white/10'
               }`}
             >
               CRT Modules & Schedules
@@ -180,8 +188,8 @@ const PlacementsPage = () => {
               onClick={() => setActiveTab('mock-test')}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
                 activeTab === 'mock-test'
-                  ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/30'
-                  : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                  ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/30'
+                  : 'bg-white/5 text-stone-300 hover:bg-white/10'
               }`}
             >
               Mock Test Simulator
@@ -198,7 +206,7 @@ const PlacementsPage = () => {
           value={stats.highestPackage || '₹44.5 LPA'}
           change="Microsoft IDC & Google"
           changeType="positive"
-          color="cyan"
+          color="orange"
         />
         <StatCard
           icon={TrendingUp}
@@ -206,7 +214,7 @@ const PlacementsPage = () => {
           value={stats.averagePackage || '₹11.8 LPA'}
           change="+18.4% YoY Surge"
           changeType="positive"
-          color="purple"
+          color="amber"
         />
         <StatCard
           icon={CheckCircle2}
@@ -222,7 +230,7 @@ const PlacementsPage = () => {
           value={stats.totalOffers || '642+'}
           change="Across 85+ Recruiters"
           changeType="positive"
-          color="blue"
+          color="orange"
         />
       </div>
 
@@ -232,13 +240,13 @@ const PlacementsPage = () => {
           {/* Controls Bar */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <div className="relative flex-1 max-w-md">
-              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
               <input
                 type="text"
                 placeholder="Search company, job role, or skills (e.g. Go, C++, Microsoft)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/60 border border-white/10 text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:border-cyan-400/50"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-stone-900/70 border border-white/15 text-white placeholder-stone-400 text-xs sm:text-sm focus:outline-none focus:border-orange-400/60"
               />
             </div>
 
@@ -249,8 +257,8 @@ const PlacementsPage = () => {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
                     selectedCategory === cat
-                      ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                      : 'text-slate-400 hover:text-white bg-white/5'
+                      ? 'bg-orange-500/20 text-orange-300 border border-orange-500/30'
+                      : 'text-stone-400 hover:text-white bg-white/5'
                   }`}
                 >
                   {cat}
@@ -278,14 +286,14 @@ const PlacementsPage = () => {
                           <h3 className="font-bold text-white text-base leading-tight">
                             {drive.companyName}
                           </h3>
-                          <span className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
-                            <MapPin className="w-3 h-3 text-slate-500" />
+                          <span className="text-[11px] text-stone-400 flex items-center gap-1 mt-0.5">
+                            <MapPin className="w-3 h-3 text-stone-500" />
                             {drive.location}
                           </span>
                         </div>
                       </div>
 
-                      <span className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                      <span className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-orange-500/15 text-orange-300 border border-orange-500/30">
                         {drive.ctc}
                       </span>
                     </div>
@@ -293,37 +301,37 @@ const PlacementsPage = () => {
                     {/* Role & Category */}
                     <div className="space-y-1.5 mb-3">
                       <div className="flex items-center gap-2">
-                        <Badge variant="purple" size="xs">
+                        <Badge variant="amber" size="xs">
                           {drive.category}
                         </Badge>
-                        <Badge variant="cyan" size="xs">
+                        <Badge variant="orange" size="xs">
                           {drive.status}
                         </Badge>
                       </div>
-                      <h4 className="text-sm font-semibold text-slate-100">{drive.role}</h4>
-                      <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                      <h4 className="text-sm font-semibold text-white">{drive.role}</h4>
+                      <p className="text-xs text-stone-300 line-clamp-2 leading-relaxed">
                         {drive.jobDescription}
                       </p>
                     </div>
 
                     {/* Eligibility & Rounds */}
                     <div className="bg-black/30 rounded-xl p-3 space-y-2 border border-white/5 text-[11px]">
-                      <div className="flex items-center justify-between text-slate-300">
-                        <span className="text-slate-400">Min CGPA Cutoff:</span>
+                      <div className="flex items-center justify-between text-stone-300">
+                        <span className="text-stone-400">Min CGPA Cutoff:</span>
                         <span className="font-mono font-bold text-amber-300">
                           {drive.eligibility?.minCgpa || 7.0} CGPA
                         </span>
                       </div>
-                      <div className="flex items-center justify-between text-slate-300">
-                        <span className="text-slate-400">Allowed Branches:</span>
-                        <span className="font-semibold text-slate-200">
+                      <div className="flex items-center justify-between text-stone-300">
+                        <span className="text-stone-400">Allowed Branches:</span>
+                        <span className="font-semibold text-stone-200">
                           {drive.eligibility?.allowedBranches?.join(', ') || 'All Branches'}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between text-slate-300">
-                        <span className="text-slate-400">Drive Date:</span>
-                        <span className="font-mono text-cyan-300 flex items-center gap-1">
-                          <Calendar className="w-3 h-3 text-cyan-400" />
+                      <div className="flex items-center justify-between text-stone-300">
+                        <span className="text-stone-400">Drive Date:</span>
+                        <span className="font-mono text-orange-300 flex items-center gap-1">
+                          <Calendar className="w-3 h-3 text-orange-400" />
                           {new Date(drive.driveDate).toLocaleDateString()}
                         </span>
                       </div>
@@ -335,7 +343,7 @@ const PlacementsPage = () => {
                         {drive.keySkills.slice(0, 4).map((skill) => (
                           <span
                             key={skill}
-                            className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-slate-300 border border-white/10"
+                            className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-stone-300 border border-white/10"
                           >
                             {skill}
                           </span>
@@ -346,7 +354,7 @@ const PlacementsPage = () => {
 
                   {/* Actions */}
                   <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
-                    <span className="text-[11px] text-slate-400">
+                    <span className="text-[11px] text-stone-400">
                       Openings: <strong className="text-white">{drive.totalOpenings || 10}</strong>
                     </span>
 
@@ -380,13 +388,13 @@ const PlacementsPage = () => {
               <GlassCard key={mod._id} hoverEffect className="p-6 space-y-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase font-semibold">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-orange-500/20 text-orange-300 border border-orange-500/30 uppercase font-semibold">
                       {mod.moduleName}
                     </span>
                     <h3 className="text-lg font-bold text-white">{mod.title}</h3>
                   </div>
 
-                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 flex items-center justify-center shrink-0">
                     {mod.moduleName.includes('Coding') ? (
                       <Code className="w-5 h-5" />
                     ) : mod.moduleName.includes('Reasoning') ? (
@@ -399,29 +407,29 @@ const PlacementsPage = () => {
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-300 leading-relaxed">{mod.description}</p>
+                <p className="text-xs text-stone-300 leading-relaxed">{mod.description}</p>
 
                 {/* Trainer & Schedule */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-xl bg-black/30 border border-white/5 text-xs">
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Lead Trainer:</span>
+                    <span className="text-stone-400 block text-[10px]">Lead Trainer:</span>
                     <span className="font-semibold text-white">{mod.trainer?.name}</span>
-                    <span className="text-[10px] text-slate-400 block">{mod.trainer?.designation}</span>
+                    <span className="text-[10px] text-stone-400 block">{mod.trainer?.designation}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px]">Session Timing:</span>
-                    <span className="font-mono text-cyan-300 font-semibold">{mod.schedule?.day}</span>
-                    <span className="text-[10px] text-slate-400 block">{mod.schedule?.time}</span>
+                    <span className="text-stone-400 block text-[10px]">Session Timing:</span>
+                    <span className="font-mono text-orange-300 font-semibold">{mod.schedule?.day}</span>
+                    <span className="text-[10px] text-stone-400 block">{mod.schedule?.time}</span>
                   </div>
                 </div>
 
                 {/* Topics List */}
                 <div className="space-y-1.5">
-                  <span className="text-[11px] font-semibold text-slate-200">Syllabus & High-Yield Topics:</span>
-                  <ul className="space-y-1 text-xs text-slate-300">
+                  <span className="text-[11px] font-semibold text-stone-200">Syllabus & High-Yield Topics:</span>
+                  <ul className="space-y-1 text-xs text-stone-300">
                     {mod.topicsCovered?.map((topic, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0" />
                         <span>{topic}</span>
                       </li>
                     ))}
@@ -436,7 +444,7 @@ const PlacementsPage = () => {
                       setActiveTab('mock-test');
                       resetTest();
                     }}
-                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/20 to-indigo-600/20 hover:from-cyan-500/30 hover:to-indigo-600/30 border border-cyan-500/30 text-cyan-300 font-semibold text-xs flex items-center justify-center gap-2 transition-all"
+                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-orange-500/20 to-amber-600/20 hover:from-orange-500/30 hover:to-amber-600/30 border border-orange-500/30 text-orange-300 font-semibold text-xs flex items-center justify-center gap-2 transition-all"
                   >
                     <span>Launch Module Practice Test ({mod.mockTests[0].questions?.length} Questions)</span>
                     <ChevronRight className="w-4 h-4" />
@@ -464,8 +472,8 @@ const PlacementsPage = () => {
                   }}
                   className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
                     selectedTestModule?._id === mod._id
-                      ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30'
-                      : 'bg-white/5 text-slate-300 hover:bg-white/10'
+                      ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
+                      : 'bg-white/5 text-stone-300 hover:bg-white/10'
                   }`}
                 >
                   {mod.moduleName} Test
@@ -479,29 +487,29 @@ const PlacementsPage = () => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-white/10 gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <Badge variant="purple" size="xs">
+                    <Badge variant="amber" size="xs">
                       {selectedTestModule.moduleName}
                     </Badge>
-                    <Badge variant="cyan" size="xs">
+                    <Badge variant="orange" size="xs">
                       {selectedTestModule.mockTests[0].difficulty}
                     </Badge>
                   </div>
                   <h2 className="text-xl font-bold text-white">
                     {selectedTestModule.mockTests[0].testTitle}
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-stone-400 mt-1">
                     Answer all questions and submit to view immediate automated scoring and detailed analytical explanations.
                   </p>
                 </div>
 
                 <div className="text-right sm:border-l sm:border-white/10 sm:pl-6 shrink-0">
-                  <span className="text-[10px] text-slate-400 block font-mono">TEST STATUS</span>
+                  <span className="text-[10px] text-stone-400 block font-mono">TEST STATUS</span>
                   {testSubmitted ? (
                     <span className="text-lg font-mono font-extrabold text-emerald-400">
                       Score: {testScore} / {selectedTestModule.mockTests[0].questions.length}
                     </span>
                   ) : (
-                    <span className="text-lg font-mono font-extrabold text-cyan-300">
+                    <span className="text-lg font-mono font-extrabold text-orange-300">
                       {Object.keys(userAnswers).length} / {selectedTestModule.mockTests[0].questions.length} Answered
                     </span>
                   )}
@@ -552,8 +560,8 @@ const PlacementsPage = () => {
                                   : isOptSelected && isWrong
                                   ? 'bg-rose-500/20 border border-rose-500/50 text-rose-200'
                                   : isOptSelected
-                                  ? 'bg-cyan-500/20 border border-cyan-500/40 text-cyan-200'
-                                  : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-transparent'
+                                  ? 'bg-orange-500/20 border border-orange-500/40 text-orange-200'
+                                  : 'bg-white/5 hover:bg-white/10 text-stone-300 border border-transparent'
                               }`}
                             >
                               <div className="flex items-center gap-3">
@@ -573,12 +581,12 @@ const PlacementsPage = () => {
 
                       {/* Explanation box after submit */}
                       {testSubmitted && (
-                        <div className="mt-4 p-3.5 rounded-xl bg-slate-900/80 border border-white/10 text-xs space-y-1">
-                          <span className="font-semibold text-cyan-300 flex items-center gap-1.5">
+                        <div className="mt-4 p-3.5 rounded-xl bg-stone-900/90 border border-white/10 text-xs space-y-1">
+                          <span className="font-semibold text-orange-300 flex items-center gap-1.5">
                             <HelpCircle className="w-3.5 h-3.5" />
                             Correct Answer: Option {String.fromCharCode(65 + q.correctAnswer)}
                           </span>
-                          <p className="text-slate-300 leading-relaxed">{q.explanation}</p>
+                          <p className="text-stone-300 leading-relaxed">{q.explanation}</p>
                         </div>
                       )}
                     </div>
@@ -603,7 +611,7 @@ const PlacementsPage = () => {
               </div>
             </GlassCard>
           ) : (
-            <p className="text-slate-400 text-sm">Select a module to view practice test.</p>
+            <p className="text-stone-400 text-sm">Select a module to view practice test.</p>
           )}
         </div>
       )}
@@ -611,13 +619,13 @@ const PlacementsPage = () => {
       {/* Application Confirmation Modal */}
       {applyingPlacement && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="max-w-md w-full glass-panel p-6 rounded-3xl border border-cyan-500/30 space-y-4 shadow-glass-glow">
+          <div className="max-w-md w-full glass-panel p-6 rounded-3xl border border-orange-500/30 space-y-4 shadow-glass-glow">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-cyan-400" />
+              <Briefcase className="w-5 h-5 text-orange-400" />
               Apply for {applyingPlacement.companyName}
             </h3>
 
-            <div className="p-3 bg-white/5 rounded-xl text-xs space-y-2 text-slate-300">
+            <div className="p-3 bg-white/5 rounded-xl text-xs space-y-2 text-stone-300">
               <p>
                 <strong>Role:</strong> {applyingPlacement.role}
               </p>
@@ -627,7 +635,7 @@ const PlacementsPage = () => {
               <p>
                 <strong>Cutoff:</strong> Minimum {applyingPlacement.eligibility?.minCgpa} CGPA required.
               </p>
-              <p className="text-slate-400 text-[11px]">
+              <p className="text-stone-400 text-[11px]">
                 Your verified CampusOS digital profile, resume, and semester academic credentials will be forwarded directly to the university Training & Placement Cell.
               </p>
             </div>

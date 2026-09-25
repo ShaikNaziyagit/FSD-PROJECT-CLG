@@ -171,6 +171,15 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`[CampusOS Engine] Server active on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode.`);
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`[Server Error] Port ${PORT} is already in use by another process.`);
+    console.error(`[Tip] To free the port on Windows: npx kill-port ${PORT} or check running Node processes.`);
+  } else {
+    console.error(`[Server Error]`, err);
+  }
 });

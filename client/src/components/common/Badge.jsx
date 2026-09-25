@@ -2,30 +2,33 @@ import React from 'react';
 
 const Badge = ({
   children,
-  variant = 'cyan', // cyan, purple, blue, emerald, amber, rose, slate
+  variant = 'orange', // orange, amber, white, emerald, rose, slate
   size = 'sm',
   className = '',
 }) => {
   const variantStyles = {
-    cyan: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
-    purple: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
-    blue: 'bg-blue-500/15 text-blue-300 border-blue-500/30',
-    emerald: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
-    amber: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
-    rose: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
-    slate: 'bg-slate-700/40 text-slate-300 border-slate-600/40',
-  }[variant] || 'bg-slate-700/40 text-slate-300 border-slate-600/40';
+    orange: 'bg-orange-500/20 text-orange-200 border-orange-400/40 shadow-[0_0_12px_rgba(249,115,22,0.25)]',
+    amber: 'bg-amber-500/20 text-amber-200 border-amber-400/40 shadow-[0_0_12px_rgba(245,158,11,0.25)]',
+    white: 'bg-white/15 text-white border-white/30 shadow-[0_0_10px_rgba(255,255,255,0.2)]',
+    emerald: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/40 shadow-[0_0_12px_rgba(16,185,129,0.2)]',
+    rose: 'bg-rose-500/20 text-rose-200 border-rose-400/40 shadow-[0_0_12px_rgba(244,63,94,0.2)]',
+    slate: 'bg-stone-800/80 text-stone-200 border-stone-600/50',
+    // Fallback aliases
+    cyan: 'bg-orange-500/20 text-orange-200 border-orange-400/40 shadow-[0_0_12px_rgba(249,115,22,0.25)]',
+    blue: 'bg-amber-500/20 text-amber-200 border-amber-400/40 shadow-[0_0_12px_rgba(245,158,11,0.25)]',
+    purple: 'bg-orange-500/20 text-orange-200 border-orange-400/40 shadow-[0_0_12px_rgba(249,115,22,0.25)]',
+  }[variant] || 'bg-orange-500/20 text-orange-200 border-orange-400/40';
 
   const sizeStyles = {
-    xs: 'px-2 py-0.5 text-[10px] font-medium tracking-wide',
-    sm: 'px-2.5 py-1 text-xs font-medium',
-    md: 'px-3 py-1.5 text-sm font-medium',
-  }[size] || 'px-2.5 py-1 text-xs';
+    xs: 'px-2 py-0.5 text-[10px] font-bold tracking-wider',
+    sm: 'px-2.5 py-1 text-xs font-bold tracking-wide',
+    md: 'px-3 py-1.5 text-sm font-bold tracking-wide',
+  }[size] || 'px-2.5 py-1 text-xs font-bold';
 
   return (
     <span
       className={`
-        inline-flex items-center gap-1 rounded-full border backdrop-blur-md uppercase tracking-wider
+        inline-flex items-center gap-1.5 rounded-full border backdrop-blur-md uppercase font-mono
         ${variantStyles}
         ${sizeStyles}
         ${className}

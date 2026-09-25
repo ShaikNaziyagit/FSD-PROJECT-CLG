@@ -5,58 +5,121 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --campii-bg: #0c0a08;
+    --campii-primary: #f97316;
   }
 
   body {
-    @apply bg-[#050713] text-slate-100 antialiased font-sans overflow-x-hidden selection:bg-indigo-500/30 selection:text-cyan-300;
-    background-color: #050713;
-    background-image: 
-      radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-      radial-gradient(at 90% 20%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
-      radial-gradient(at 50% 90%, rgba(168, 85, 247, 0.07) 0px, transparent 50%);
-    background-attachment: fixed;
+    @apply antialiased font-sans overflow-x-hidden selection:bg-orange-500/35 selection:text-orange-100;
+    background-color: #0c0a08;
+    color: #f8fafc;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    color: #e2e8f0;
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Warm Amber & Orange Glass Style */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(5, 7, 19, 0.8);
+  background: rgba(14, 11, 9, 0.8);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.35);
+  background: rgba(249, 115, 22, 0.4);
   border-radius: 9999px;
+  border: 2px solid rgba(14, 11, 9, 0.8);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.6);
+  background: rgba(249, 115, 22, 0.75);
 }
 
-/* Glassmorphism Design System Classes */
+/* Premium Warm Glassmorphic Panels with Maximum Readability Backing */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  background: rgba(18, 14, 11, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 12px 36px -4px rgba(0, 0, 0, 0.6),
+    0 4px 12px -2px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .glass-panel-interactive {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 14, 11, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 10px 30px -4px rgba(0, 0, 0, 0.5),
+    0 2px 8px -2px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glass-panel-interactive:hover {
-  background: rgba(26, 38, 68, 0.7);
-  border-color: rgba(99, 102, 241, 0.35);
-  box-shadow: 0 12px 40px -10px rgba(99, 102, 241, 0.2);
+  background: rgba(26, 19, 14, 0.92);
+  border-color: rgba(249, 115, 22, 0.55);
+  box-shadow: 
+    0 18px 42px -8px rgba(249, 115, 22, 0.28),
+    0 4px 16px -2px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
+/* Light / Legacy panel compatibility - upgraded with warm high-contrast glass */
+.glass-panel-light {
+  background: rgba(20, 16, 12, 0.86);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0 12px 36px -4px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glass-panel-light-interactive {
+  background: rgba(20, 16, 12, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 10px 30px -4px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-light-interactive:hover {
+  background: rgba(28, 20, 15, 0.92);
+  border-color: rgba(249, 115, 22, 0.55);
+  box-shadow: 
+    0 18px 42px -8px rgba(249, 115, 22, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Floating Glass Navbar */
+.glass-nav-floating {
+  background: rgba(14, 11, 9, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 16px 40px -8px rgba(0, 0, 0, 0.7),
+    0 4px 12px -2px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Card Glow and Top Specular Rim Light */
 .glass-card-glow {
   position: relative;
   overflow: hidden;
@@ -68,20 +131,53 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.55), transparent);
 }
 
-.glow-cyan {
-  filter: drop-shadow(0 0 12px rgba(6, 182, 212, 0.4));
+/* Warm Orange and Amber Tech Accent Glows */
+.glow-orange-soft {
+  filter: drop-shadow(0 0 16px rgba(249, 115, 22, 0.4));
 }
-.glow-purple {
-  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.4));
+.glow-amber-soft {
+  filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.4));
 }
 
-/* Subtle futuristic background grid */
-.tech-grid-bg {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+/* High Contrast Highlight Utilities (White and Orange) */
+.text-highlight-orange {
+  color: #fb923c;
+  text-shadow: 0 0 12px rgba(249, 115, 22, 0.45);
+}
+.text-highlight-amber {
+  color: #fbbf24;
+  text-shadow: 0 0 12px rgba(251, 191, 36, 0.45);
+}
+.text-highlight-white {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+}
+
+/* Micro Animations */
+@keyframes pulseGlowSlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlowSlow 4s ease-in-out infinite;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

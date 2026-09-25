@@ -142,8 +142,8 @@ const EventsPage = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
-                  : 'text-slate-400 hover:text-white bg-slate-900/50 hover:bg-white/5 border border-white/5'
+                  ? 'bg-gradient-to-r from-orange-500/20 to-amber-500/20 text-orange-300 border border-orange-500/40 shadow-sm'
+                  : 'text-stone-400 hover:text-white bg-stone-900/50 hover:bg-white/5 border border-white/5'
               }`}
             >
               {cat}
@@ -185,7 +185,7 @@ const EventsPage = () => {
               <GlassCard key={ev._id} hoverEffect className="overflow-hidden flex flex-col justify-between">
                 <div>
                   {/* Banner Image */}
-                  <div className="h-44 relative overflow-hidden bg-slate-900">
+                  <div className="h-44 relative overflow-hidden bg-stone-900">
                     <img
                       src={
                         ev.banner ||
@@ -194,15 +194,15 @@ const EventsPage = () => {
                       alt={ev.title}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b1226] via-black/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#140f0c] via-black/30 to-transparent" />
                     <div className="absolute top-3 left-3">
-                      <Badge variant="purple" size="xs">
+                      <Badge variant="amber" size="xs">
                         {ev.category}
                       </Badge>
                     </div>
                     {ev.featured && (
                       <div className="absolute top-3 right-3">
-                        <Badge variant="cyan" size="xs">
+                        <Badge variant="orange" size="xs">
                           Featured Flagship
                         </Badge>
                       </div>
@@ -215,17 +215,17 @@ const EventsPage = () => {
                       {ev.title}
                     </h3>
 
-                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-stone-400 line-clamp-2 leading-relaxed">
                       {ev.description}
                     </p>
 
-                    <div className="space-y-1.5 text-xs text-slate-300 pt-1">
+                    <div className="space-y-1.5 text-xs text-stone-300 pt-1">
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                        <Calendar className="w-3.5 h-3.5 text-orange-400 shrink-0" />
                         <span>{new Date(ev.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })} at {ev.time}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                        <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                         <span className="truncate">{ev.location}</span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -238,8 +238,8 @@ const EventsPage = () => {
 
                 {/* Footer Controls */}
                 <div className="p-5 pt-0 mt-3 border-t border-white/5 flex items-center justify-between">
-                  <div className="text-[11px] font-mono text-slate-400">
-                    <span className="text-cyan-300 font-bold">{remainingSeats}</span> spots left
+                  <div className="text-[11px] font-mono text-stone-400">
+                    <span className="text-orange-300 font-bold">{remainingSeats}</span> spots left
                   </div>
 
                   <GlassButton

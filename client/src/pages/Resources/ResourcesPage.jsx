@@ -66,7 +66,7 @@ const ResourcesPage = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        badge={<Badge variant="blue">Infrastructure Directory</Badge>}
+        badge={<Badge variant="orange">Infrastructure Directory</Badge>}
         title="Campus Facilities & Resources"
         subtitle="Directory of research laboratories, 24/7 central libraries, medical hubs, and academic support cells."
       />
@@ -80,8 +80,8 @@ const ResourcesPage = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40'
-                  : 'text-slate-400 hover:text-white bg-slate-900/50 hover:bg-white/5 border border-white/5'
+                  ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40'
+                  : 'text-stone-300 hover:text-white bg-stone-900/50 hover:bg-stone-800/80 border border-white/10'
               }`}
             >
               {cat}
@@ -120,7 +120,7 @@ const ResourcesPage = () => {
               <GlassCard key={res._id} hoverEffect className="p-6 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shadow-sm">
+                    <div className="w-12 h-12 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 shadow-sm">
                       <IconComponent className="w-6 h-6" />
                     </div>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
@@ -133,13 +133,13 @@ const ResourcesPage = () => {
                     {res.name}
                   </h3>
 
-                  <p className="text-xs text-slate-400 mb-4 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-stone-300 mb-4 line-clamp-3 leading-relaxed">
                     {res.description}
                   </p>
 
-                  <div className="space-y-2 text-xs text-slate-300 py-3 border-y border-white/5 mb-4">
+                  <div className="space-y-2 text-xs text-stone-300 py-3 border-y border-white/5 mb-4">
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                      <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0" />
                       <span className="truncate">{res.location}</span>
                     </div>
                     <div className="flex items-center gap-2">

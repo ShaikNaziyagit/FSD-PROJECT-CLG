@@ -35,7 +35,7 @@ const Modal = ({
 
       {/* Modal Dialog Content */}
       <div className={`relative z-10 w-full ${maxWidth} animate-in zoom-in-95 duration-200`}>
-        <GlassCard className="p-6 md:p-8 max-h-[90vh] overflow-y-auto border-indigo-500/20 shadow-glass-glow">
+        <GlassCard className="p-6 md:p-8 max-h-[90vh] overflow-y-auto border-orange-500/25 shadow-glass-glow">
           <div className="flex items-center justify-between pb-4 mb-5 border-b border-white/10">
             <h3 className="text-xl font-bold text-white tracking-tight">{title}</h3>
             <button

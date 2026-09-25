@@ -111,7 +111,7 @@ const ClubsPage = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        badge={<Badge variant="purple">Campus Guilds</Badge>}
+        badge={<Badge variant="orange">Campus Guilds</Badge>}
         title="Student Societies & Clubs"
         subtitle="Join technical guilds, robotics labs, competitive programming teams, and cultural collectives."
       >
@@ -136,8 +136,8 @@ const ClubsPage = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40'
-                  : 'text-slate-400 hover:text-white bg-slate-900/50 hover:bg-white/5 border border-white/5'
+                  ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40'
+                  : 'text-stone-300 hover:text-white bg-stone-900/50 hover:bg-stone-800/80 border border-white/10'
               }`}
             >
               {cat}
@@ -178,16 +178,16 @@ const ClubsPage = () => {
               <GlassCard key={club._id} hoverEffect className="overflow-hidden flex flex-col justify-between">
                 <div>
                   {/* Cover Header */}
-                  <div className="h-32 relative bg-slate-900 overflow-hidden">
+                  <div className="h-32 relative bg-stone-900 overflow-hidden">
                     <img
                       src={club.coverImage || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800'}
                       alt={club.name}
                       className="w-full h-full object-cover opacity-60"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b1328] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#120e0b] via-transparent to-transparent" />
                     
                     {/* Club Logo Avatar */}
-                    <div className="absolute bottom-2 left-4 w-14 h-14 rounded-2xl bg-[#050713] p-1 border border-white/10 shadow-lg">
+                    <div className="absolute bottom-2 left-4 w-14 h-14 rounded-2xl bg-[#18120e] p-1 border border-orange-500/20 shadow-lg">
                       <img
                         src={club.logo || 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=200'}
                         alt={club.name}
@@ -196,7 +196,7 @@ const ClubsPage = () => {
                     </div>
 
                     <div className="absolute top-3 right-3">
-                      <Badge variant="cyan" size="xs">
+                      <Badge variant="orange" size="xs">
                         {club.category}
                       </Badge>
                     </div>
@@ -207,26 +207,26 @@ const ClubsPage = () => {
                     <div className="flex items-baseline justify-between">
                       <h3 className="text-base font-bold text-white line-clamp-1">{club.name}</h3>
                       {club.shortTag && (
-                        <span className="text-[10px] font-mono text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded">
+                        <span className="text-[10px] font-mono text-orange-300 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">
                           {club.shortTag}
                         </span>
                       )}
                     </div>
 
-                    <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
+                    <p className="text-xs text-stone-300 line-clamp-3 leading-relaxed">
                       {club.description}
                     </p>
 
-                    <div className="space-y-1.5 pt-2 text-xs text-slate-300">
+                    <div className="space-y-1.5 pt-2 text-xs text-stone-300">
                       {club.facultyCoordinator?.name && (
                         <div className="flex items-center gap-2">
-                          <Shield className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                          <Shield className="w-3.5 h-3.5 text-orange-400 shrink-0" />
                           <span className="truncate">Advisor: {club.facultyCoordinator.name}</span>
                         </div>
                       )}
                       {club.contactEmail && (
                         <div className="flex items-center gap-2">
-                          <Mail className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                          <Mail className="w-3.5 h-3.5 text-orange-300 shrink-0" />
                           <span className="truncate">{club.contactEmail}</span>
                         </div>
                       )}

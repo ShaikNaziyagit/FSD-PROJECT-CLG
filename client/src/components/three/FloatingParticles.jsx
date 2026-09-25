@@ -11,13 +11,13 @@ const FloatingParticles = ({ count = 120 }) => {
     const spd = new Float32Array(count * 3);
 
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 25;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 15;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 20;
+      pos[i * 3] = (Math.random() - 0.5) * 24;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 14;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 18;
 
-      spd[i * 3] = (Math.random() - 0.5) * 0.005;
-      spd[i * 3 + 1] = Math.random() * 0.008 + 0.002; // slow upward drift
-      spd[i * 3 + 2] = (Math.random() - 0.5) * 0.005;
+      spd[i * 3] = (Math.random() - 0.5) * 0.004;
+      spd[i * 3 + 1] = Math.random() * 0.007 + 0.002; // slow upward drift
+      spd[i * 3 + 2] = (Math.random() - 0.5) * 0.004;
     }
     return [pos, spd];
   }, [count]);
@@ -48,11 +48,11 @@ const FloatingParticles = ({ count = 120 }) => {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.12}
-        color="#06b6d4"
+        size={0.14}
+        color="#0284c7"
         transparent
-        opacity={0.75}
-        blending={THREE.AdditiveBlending}
+        opacity={0.65}
+        blending={THREE.NormalBlending}
       />
     </points>
   );

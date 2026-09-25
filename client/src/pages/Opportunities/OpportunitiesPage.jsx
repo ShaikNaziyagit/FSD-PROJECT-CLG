@@ -117,7 +117,7 @@ const OpportunitiesPage = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        badge={<Badge variant="emerald">Opportunity Discovery Radar</Badge>}
+        badge={<Badge variant="orange">Opportunity Discovery Radar</Badge>}
         title="Career & Growth Radar"
         subtitle="Curated summer internships, enterprise hackathons, research fellowships, and prestigious scholarships."
       >
@@ -127,11 +127,11 @@ const OpportunitiesPage = () => {
               onClick={() => setOnlySaved(!onlySaved)}
               className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
                 onlySaved
-                  ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
-                  : 'bg-slate-900/60 text-slate-300 border-white/10 hover:border-white/20'
+                  ? 'bg-orange-500/20 text-orange-300 border-orange-500/40'
+                  : 'bg-stone-900/60 text-stone-200 border-white/10 hover:border-orange-500/30'
               }`}
             >
-              {onlySaved ? <BookmarkCheck className="w-3.5 h-3.5 text-cyan-400" /> : <Bookmark className="w-3.5 h-3.5" />}
+              {onlySaved ? <BookmarkCheck className="w-3.5 h-3.5 text-orange-400" /> : <Bookmark className="w-3.5 h-3.5 text-stone-300" />}
               <span>Saved ({user?.savedOpportunities?.length || 0})</span>
             </button>
           )}
@@ -158,8 +158,8 @@ const OpportunitiesPage = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                  : 'text-slate-400 hover:text-white bg-slate-900/50 hover:bg-white/5 border border-white/5'
+                  ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40'
+                  : 'text-stone-300 hover:text-white bg-stone-900/50 hover:bg-stone-800/80 border border-white/10'
               }`}
             >
               {cat}
@@ -201,18 +201,18 @@ const OpportunitiesPage = () => {
               <GlassCard key={opp._id} hoverEffect className="p-6 flex flex-col justify-between">
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-3">
-                    <Badge variant="cyan" size="xs">
+                    <Badge variant="orange" size="xs">
                       {opp.category}
                     </Badge>
                     <button
                       onClick={() => handleToggleBookmark(opp._id)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+                      className="p-1.5 rounded-lg text-stone-400 hover:text-orange-400 hover:bg-white/5 transition-colors"
                       title={isBookmarked ? 'Remove bookmark' : 'Bookmark opportunity'}
                     >
                       {isBookmarked ? (
-                        <BookmarkCheck className="w-4 h-4 text-cyan-400 fill-cyan-400/20" />
+                        <BookmarkCheck className="w-4 h-4 text-orange-400 fill-orange-400/20" />
                       ) : (
-                        <Bookmark className="w-4 h-4" />
+                        <Bookmark className="w-4 h-4 text-stone-400" />
                       )}
                     </button>
                   </div>
@@ -220,9 +220,9 @@ const OpportunitiesPage = () => {
                   <h3 className="text-base font-bold text-white mb-1 leading-snug">
                     {opp.title}
                   </h3>
-                  <p className="text-xs font-semibold text-slate-300 mb-3">{opp.organization}</p>
+                  <p className="text-xs font-semibold text-orange-300/90 mb-3">{opp.organization}</p>
 
-                  <p className="text-xs text-slate-400 mb-4 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-stone-200 mb-4 line-clamp-3 leading-relaxed">
                     {opp.description}
                   </p>
 
@@ -232,7 +232,7 @@ const OpportunitiesPage = () => {
                       {opp.skills.slice(0, 4).map((sk, idx) => (
                         <span
                           key={idx}
-                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800/80 text-slate-300 border border-white/5"
+                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-stone-900/90 text-stone-200 border border-orange-500/20"
                         >
                           {sk}
                         </span>
@@ -240,20 +240,20 @@ const OpportunitiesPage = () => {
                     </div>
                   )}
 
-                  <div className="space-y-1 text-xs text-slate-400 mb-2">
+                  <div className="space-y-1 text-xs text-stone-300 mb-2">
                     <div className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-slate-500" />
+                      <MapPin className="w-3.5 h-3.5 text-orange-400" />
                       <span>{opp.location}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-slate-500" />
+                      <Clock className="w-3.5 h-3.5 text-stone-400" />
                       <span>Deadline: {new Date(opp.deadline).toLocaleDateString()}</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-white/10 flex items-center justify-between mt-4">
-                  <div className="text-xs font-mono font-bold text-cyan-300">
+                  <div className="text-xs font-mono font-bold text-orange-400">
                     {opp.stipendOrPrize}
                   </div>
 
